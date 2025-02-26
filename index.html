@@ -1,35 +1,59 @@
-<script>
-    function submitForm(event) {
-        event.preventDefault(); // Prevent page reload
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Generation Form</title>
+</head>
+<body>
+    <h2>Lead Generation Form</h2>
+    <form id="leadForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required><br>
 
-        const name = document.getElementById("name").value;
-        const phone = document.getElementById("phone").value;
-        const city = document.getElementById("city").value;
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" required><br>
 
-        if (!name || !phone || !city) {
-            alert("Please fill all fields!");
-            return;
-        }
+        <label for="city">City:</label>
+        <input type="text" id="city" required><br>
 
-        const data = { name, phone, city };
+        <button type="submit">Submit</button>
+    </form>
 
-        fetch("https://script.google.com/macros/s/AKfycbzYjp7eBU-0-0S8h3F57_WdFl_YWIlCx2krliW0HhbueWKo7tOI_5_IGS1mfNYHe7g3/exec", {  // Replace with actual script URL
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.text()) // Get response as text
-        .then(result => {
-            console.log("Server Response:", result); // Debugging log
-            if (result.includes("Success")) {
-                window.location.href = "thankyou.html"; // Redirect on success
-            } else {
-                alert("Submission failed: " + result);
+    <script>
+        document.getElementById("leadForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form from reloading page
+
+            const name = document.getElementById("name").value;
+            const phone = document.getElementById("phone").value;
+            const city = document.getElementById("city").value;
+
+            if (!name || !phone || !city) {
+                alert("Please fill all fields!");
+                return;
             }
-        })
-        .catch(error => {
-            console.error("Fetch Error:", error);
-            alert("Submission failed. Please try again.");
+
+            const data = { name, phone, city };
+
+            fetch("https://script.google.com/macros/s/AKfycbzYjp7eBU-0-0S8h3F57_WdFl_YWIlCx2krliW0HhbueWKo7tOI_5_IGS1mfNYHe7g3/exec", {  // Replace with actual URL
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(result => {
+                console.log("Server Response:", result);
+                if (result.includes("Success")) {
+                    window.location.href = "thankyou.html";
+                } else {
+                    alert("Submission failed: " + result);
+                }
+            })
+            .catch(error => {
+                console.error("Fetch Error:", error);
+                alert("Submission failed. Please try again.");
+            });
         });
-    }
-</script>
+    </script>
+</body>
+</html>
