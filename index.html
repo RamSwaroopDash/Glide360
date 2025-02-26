@@ -33,6 +33,7 @@
             color: white;
             font-size: 16px;
             cursor: pointer;
+            border: none;
         }
         button:hover {
             background-color: #218838;
@@ -58,26 +59,35 @@
     </div>
 
     <script>
-        document.getElementById("leadForm").addEventListener("submit", async function(event) {
+        document.getElementById("leadForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            let name = document.getElementById("name").value;
-            let email = document.getElementById("email").value;
-            let phone = document.getElementById("phone").value;
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let message = document.getElementById("message");
 
-            let response = await fetch("https://script.google.com/macros/s/AKfycbxMOsIDEU4TClH0wwg9029OmtzQM4lNcQ7nM7VyYN3onaKJnPBaPuYOPbMSvt5uhfyc/exec", {  // Replace with your Web App URL
+            if (!name || !email || !phone) {
+                message.innerText = "Please fill all fields.";
+                return;
+            }
+
+            fetch("https://script.google.com/macros/s/AKfycbzhvTQILKcwVhbkjdPKcW2Aj5JfPIstpxwOzkvDKn8g_XD8AyLI9llAyjvdoTYClb25/exec", {  // Replace with your Web App URL
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, email, phone })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    window.location.href = "thankyou.html";  // Redirect after success
+                } else {
+                    message.innerText = "Submission failed. Try again.";
+                }
+            })
+            .catch(error => {
+                message.innerText = "Error: " + error.message;
             });
-
-            let result = await response.json();
-
-            if (result.status === "success") {
-                window.location.href = "thankyou.html"; // Redirect after success
-            } else {
-                document.getElementById("message").innerText = "Error: " + result.message;
-            }
         });
     </script>
 
