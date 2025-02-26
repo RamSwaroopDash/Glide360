@@ -17,22 +17,24 @@
                 return;
             }
             
-            const data = {
-                name: name,
-                phone: phone,
-                city: city
-            };
+            const data = { name, phone, city };
 
-            fetch("https://script.google.com/macros/s/AKfycbwXBrxDIXMHVsLRF4_t5lf3_q8rSPUTXGVLZ1g84baXXtdd1trszHa_eaXHWT0ZeCkE/exec", {
+            fetch("https://script.google.com/macros/s/AKfycbzYjp7eBU-0-0S8h3F57_WdFl_YWIlCx2krliW0HhbueWKo7tOI_5_IGS1mfNYHe7g3/exec", {
                 method: "POST",
-                mode: "no-cors",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
-            }).then(() => {
-                window.location.href = "thankyou.html"; // Redirect to Thank You page
-            }).catch(error => {
-                console.error("Error:", error);
-                alert("Something went wrong. Try again!");
+            })
+            .then(response => response.json()) 
+            .then(result => {
+                if (result.status === "success") {
+                    window.location.href = "thankyou.html"; // Redirect after successful submission
+                } else {
+                    alert("Error: " + result.message);
+                }
+            })
+            .catch(error => {
+                console.error("Fetch Error:", error);
+                alert("Submission failed. Please try again.");
             });
         }
     </script>
