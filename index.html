@@ -64,7 +64,7 @@ document.getElementById("leadForm").addEventListener("submit", async function(ev
     let city = document.getElementById("city").value;
 
     try {
-        let response = await fetch("https://script.google.com/d/1IQwcarchlCrK_oHWtzhLiqjv8Mghe10Mbh8K5eLZxrfn0JxKRFyPq2lp/edit?usp=sharing", {
+        let response = await fetch("https://script.google.com/macros/s/AKfycbwFODneY6F94MJL0Pbpfza2XP7wEzr72ASvcCOJVoauoo3aftI3LpLExKuTqkCJXXqe/exec", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, phone, city })
