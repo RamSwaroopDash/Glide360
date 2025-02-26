@@ -5,23 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lead Generation</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-        form { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; }
-        input, button { width: 100%; padding: 10px; margin-top: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f3f3f3;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45a049;
+        }
     </style>
 </head>
 <body>
 
 <h2>Enter Your Details</h2>
 <form id="leadForm">
-    <input type="text" id="name" placeholder="Your Name" required><br>
-    <input type="tel" id="phone" placeholder="Your Phone Number" required><br>
-    <input type="text" id="city" placeholder="Your City" required><br>
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="tel" id="phone" placeholder="Your Phone Number" required>
+    <input type="text" id="city" placeholder="Your City" required>
     <button type="submit">Submit</button>
 </form>
 
 <script>
-    document.getElementById("leadForm").addEventListener("submit", async function(event) {
+    document.getElementById("leadForm").addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const name = document.getElementById("name").value.trim();
@@ -29,11 +56,11 @@
         const city = document.getElementById("city").value.trim();
 
         if (!name || !phone || !city) {
-            alert("Please fill out all fields.");
+            alert("Please fill all the fields!");
             return;
         }
 
-        const url = "https://script.google.com/macros/s/AKfycbyR461d7Out0T777WmJYutexSo7grLa8yF2EY9YWeUkw1FUvORx4E3Nxjzmh91E6Ilm/exec"; // Replace with your Web App URL
+        const url = "https://script.google.com/macros/s/AKfycbwXBrxDIXMHVsLRF4_t5lf3_q8rSPUTXGVLZ1g84baXXtdd1trszHa_eaXHWT0ZeCkE/exec";  // Replace with your Google Apps Script Web App URL
 
         try {
             const response = await fetch(url, {
@@ -45,14 +72,14 @@
             const result = await response.text();
 
             if (result.trim() === "Success") {
-                alert("Your information has been submitted successfully!");
+                alert("Submitted successfully!");
                 window.location.href = "thank-you.html";
             } else {
-                alert("Submission failed. Please try again.");
+                alert("Submission failed! Please try again.");
             }
         } catch (error) {
-            alert("An error occurred. Please try again.");
-            console.error(error);
+            console.error("Error:", error);
+            alert("Something went wrong! Please try again.");
         }
     });
 </script>
