@@ -3,34 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lead Form</title>
+    <title>Submit Your Details</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
+            text-align: center;
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
         .container {
-            text-align: center;
+            width: 50%;
+            margin: auto;
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
         }
         input, button {
-            width: 100%;
+            width: 90%;
             padding: 10px;
             margin: 10px 0;
-            border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 16px;
+            border: 1px solid #ccc;
         }
         button {
             background-color: #28a745;
@@ -44,43 +38,39 @@
     </style>
 </head>
 <body>
+    <div class="container">
+        <h2>Enter Your Details</h2>
+        <form id="leadForm">
+            <input type="text" id="name" placeholder="Your Name" required><br>
+            <input type="email" id="email" placeholder="Your Email" required><br>
+            <input type="tel" id="phone" placeholder="Your Phone Number" required><br>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="message"></p>
+    </div>
 
-<div class="container">
-    <h2>Lead Form</h2>
-    <form id="leadForm">
-        <input type="text" id="name" placeholder="Your Name" required>
-        <input type="text" id="phone" placeholder="Your Phone" required>
-        <input type="text" id="city" placeholder="Your City" required>
-        <button type="submit">Submit</button>
-    </form>
-</div>
+    <script>
+        document.getElementById("leadForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
 
-<script>
-document.getElementById("leadForm").addEventListener("submit", async function(event) {
-    event.preventDefault();
+            let name = document.getElementById("name").value;
+            let email = document.getElementById("email").value;
+            let phone = document.getElementById("phone").value;
 
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let city = document.getElementById("city").value;
+            let response = await fetch("https://script.google.com/macros/s/AKfycbwzPeVAvKQM2tVarHnmiP6ZX_Otd3-Q-MY11bQYi73b3T2KodATAxthOTyfN4NkeIq1/exec", { // Replace with your Web App URL
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, phone })
+            });
 
-    try {
-        let response = await fetch("https://script.google.com/macros/s/AKfycby-msNnMHpt6IU6EzRRw40tt_QRxAEj7LMK73hKrYgqLiADZjS92eNq_SUuDWQtYhll/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, phone, city })
+            let result = await response.json();
+
+            if (result.status === "success") {
+                window.location.href = "thankyou.html"; // Redirect to Thank You page
+            } else {
+                document.getElementById("message").innerText = "Error: " + result.message;
+            }
         });
-
-        let result = await response.json();
-        if (result.success) {
-            window.location.href = "thankyou.html"; // Redirect on success
-        } else {
-            alert("Submission failed. Please try again.");
-        }
-    } catch (error) {
-        alert("Failed to submit. Please check your internet connection.");
-    }
-});
-</script>
-
+    </script>
 </body>
 </html>
