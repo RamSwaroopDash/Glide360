@@ -57,7 +57,7 @@
             let email = document.getElementById("email").value;
             let phone = document.getElementById("phone").value;
 
-            let response = await fetch("https://script.google.com/macros/s/AKfycbwzPeVAvKQM2tVarHnmiP6ZX_Otd3-Q-MY11bQYi73b3T2KodATAxthOTyfN4NkeIq1/exec", { // Replace with your Web App URL
+            let response = await fetch("https://script.google.com/macros/s/AKfycbxMOsIDEU4TClH0wwg9029OmtzQM4lNcQ7nM7VyYN3onaKJnPBaPuYOPbMSvt5uhfyc/exec", { // Replace with your Web App URL
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, email, phone })
