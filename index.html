@@ -1,95 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lead Form</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #28a745;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        #message {
-            margin-top: 10px;
-            font-size: 14px;
-            color: red;
-        }
-    </style>
-</head>
 <body>
-
-    <div class="container">
-        <h2>Lead Form</h2>
-        <form id="leadForm">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Your Email" required>
-            <input type="text" id="phone" placeholder="Your Phone" required>
-            <button type="submit">Submit</button>
-        </form>
-        <p id="message"></p>
-    </div>
-
-    <script>
-        document.getElementById("leadForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            let name = document.getElementById("name").value.trim();
-            let email = document.getElementById("email").value.trim();
-            let phone = document.getElementById("phone").value.trim();
-            let message = document.getElementById("message");
-
-            if (!name || !email || !phone) {
-                message.innerText = "Please fill all fields.";
-                return;
-            }
-
-            fetch("https://script.google.com/macros/s/AKfycbyMWkqdv-W_0J-HrMfdF6rgLZ7E-C5l1PP0kOtQqWIqIiRftEekgMKMx2XodpEm6ENa/exec", {  // Replace with your Web App URL
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, phone })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    window.location.href = "thankyou.html";  // Redirect after success
-                } else {
-                    message.innerText = "Submission failed. Try again.";
-                }
-            })
-            .catch(error => {
-                message.innerText = "Error: " + error.message;
-            });
-        });
-    </script>
-
+  <div class="container">
+    <form method="post" action="" name="contact-form">
+      <h4>Contact Us</h4>
+      <input type="text" name="your-name" placeholder="Name">
+      <input type="text" name="your-number" placeholder="Number">
+      <input type="email" name="your-email" placeholder="Email">
+      <textarea name="message" rows="7" placeholder="Your Message">
+      </textarea>
+      <input type="submit" value="Submit" id="submit">
+		</form>
+	</div>
 </body>
-</html>
